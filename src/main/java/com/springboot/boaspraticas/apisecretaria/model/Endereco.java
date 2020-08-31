@@ -45,6 +45,7 @@ public class Endereco implements Serializable {
     private String estado;
 
     @OneToMany(mappedBy = "endereco")
+    @JsonIgnore
     private List<Aluno> alunos = new ArrayList<>();
 
     public Endereco() {

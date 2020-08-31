@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springboot.boaspraticas.apisecretaria.model.enums.PeriodoLetivo;
 
 @Entity
@@ -24,14 +26,21 @@ public class Aluno implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @JsonIgnore
     private Long id;
 
+    @JsonProperty("nome")
     private String nome;
+    
+    @JsonProperty("idade")
     private Integer idade;
+
+    @JsonProperty("periodo_letivo")
     private int periodo;
 
     @ManyToOne
     @JoinColumn(name = "endereco_id")
+    @JsonProperty("endereco")
     private Endereco endereco;
 
     @OneToMany(mappedBy = "aluno")
