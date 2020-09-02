@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,15 +25,18 @@ public class Contato implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @JsonIgnore
+    @Null
     private Long id;
 
     @JsonProperty("email")
     private String email;
 
     @JsonProperty("numero_telefone")
+    @NotNull
     private String telefone;
 
     @JsonProperty("tipo_telefone")
+    @NotNull
     private String tipoTelefone;
 
     @ManyToOne()

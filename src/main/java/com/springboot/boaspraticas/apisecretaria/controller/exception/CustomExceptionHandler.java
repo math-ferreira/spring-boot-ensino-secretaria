@@ -1,75 +1,49 @@
 package com.springboot.boaspraticas.apisecretaria.controller.exception;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.NoSuchElementException;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomExceptionHandler {
 
-    @ExceptionHandler(value = { NoSuchElementException.class })
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
-        return handleExceptionInternal(ex,
-                new ObjectResponseException(HttpStatus.NOT_FOUND, "Objeto Aluno não encontrado", request), new HttpHeaders(),
-                HttpStatus.NOT_FOUND, request);
+    @ExceptionHandler(value = { SecretariaException.class })
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    protected ErrorResponse objectNotFound(SecretariaException ex, WebRequest request) {
+
+        ErrorResponse error = new ErrorResponse();
+        error.setHttpStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(ex.getMessage());
+        error.setPath(((ServletWebRequest) request).getRequest().getRequestURI().toString());
+        return error;
     }
 
-	@JsonPropertyOrder({ "httpStatus", "message", "path", "exception", "time_stamp" })
-    class ObjectResponseException implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-
-        @JsonProperty("http_status")
-        private int httpStatus;
-
-        @JsonProperty("mensagem")
-        private String message;
-
-        @JsonProperty("path_uri")
-        private String path;
-
-        public ObjectResponseException(HttpStatus httpStatus, String message, WebRequest request) {
-            this.httpStatus = httpStatus.value();
-            this.message = message;
-            this.path = ((ServletWebRequest)request).getRequest().getRequestURI().toString();
+    @ExceptionHandler(value = { MethodArgumentNotValidException.class })
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    protected ErrorResponse objectNotValid(MethodArgumentNotValidException ex, WebRequest request) {
+        String message = "Não foi possivel inserir o Aluno";
+        List<ObjectError> objectErrors = ex.getBindingResult().getAllErrors();
+        for (ObjectError objectError : objectErrors) {
+            String fieldErrors = ((FieldError) objectError).getField();
+            message += ", " + fieldErrors + " " + objectError.getDefaultMessage();
         }
 
-        public String getMessage() {
-            return message;
-        }
-
-        public int getHttpStatus() {
-            return httpStatus;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        public String getException() {
-            return ObjectNotFoundException.class.getName();
-        }
-
-        @JsonProperty("time_stamp")
-        public long getTimeStamp() {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            Instant instant = timestamp.toInstant();
-            return Timestamp.from(instant).getTime();
-        }
-
+        ErrorResponse error = new ErrorResponse();
+        error.setHttpStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(message);
+        error.setPath(((ServletWebRequest) request).getRequest().getRequestURI().toString());
+        return error;
     }
+
 }

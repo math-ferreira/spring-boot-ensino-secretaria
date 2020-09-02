@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,11 +29,14 @@ public class Aluno implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @JsonIgnore
+    @Null
     private Long id;
 
+    @NotNull
     @JsonProperty("nome")
     private String nome;
     
+    @NotNull
     @JsonProperty("idade")
     private Integer idade;
 
@@ -41,9 +46,11 @@ public class Aluno implements Serializable {
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     @JsonProperty("endereco")
+    @NotNull
     private Endereco endereco;
 
     @OneToMany(mappedBy = "aluno")
+    @NotNull
     private List<Contato> contatos = new ArrayList<>();
 
 
