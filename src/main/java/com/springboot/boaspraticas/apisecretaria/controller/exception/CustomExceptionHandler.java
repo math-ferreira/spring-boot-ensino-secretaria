@@ -2,8 +2,10 @@ package com.springboot.boaspraticas.apisecretaria.controller.exception;
 
 import java.util.List;
 
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,6 +16,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomExceptionHandler {
 
     @ExceptionHandler(value = { SecretariaException.class })
@@ -28,15 +31,18 @@ public class CustomExceptionHandler {
         return error;
     }
 
-    @ExceptionHandler(value = { MethodArgumentNotValidException.class })
+    @ExceptionHandler(value = { MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })
     @ResponseBody
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    protected ErrorResponse objectNotValid(MethodArgumentNotValidException ex, WebRequest request) {
+    protected ErrorResponse teste(Exception ex, WebRequest request) {
         String message = "Não foi possivel inserir o Aluno";
-        List<ObjectError> objectErrors = ex.getBindingResult().getAllErrors();
-        for (ObjectError objectError : objectErrors) {
-            String fieldErrors = ((FieldError) objectError).getField();
-            message += ", " + fieldErrors + " " + objectError.getDefaultMessage();
+        if (ex.getClass().equals(MethodArgumentNotValidException.class)) {
+            List<ObjectError> objectErrors = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors();
+            for (ObjectError objectError : objectErrors) {
+                message += ", " + objectError.getDefaultMessage();
+            }
+        } else if (ex.getClass().equals(HttpMessageNotReadableException.class)) {
+            message = "Verique o Request Body, há erro de sintaxe";
         }
 
         ErrorResponse error = new ErrorResponse();

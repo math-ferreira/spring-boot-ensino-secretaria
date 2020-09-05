@@ -32,13 +32,13 @@ public enum PeriodoLetivo {
     OITAVA_SERIE(8),
 
     @JsonProperty("primeiro grau do ensino medio")
-    PRIMEIRO_MEDIO(11),
+    PRIMEIRO_MEDIO(9),
 
     @JsonProperty("segundo grau do ensino medio")
-    SEGUNDO_MEDIO(12),
+    SEGUNDO_MEDIO(10),
 
     @JsonProperty("terceiro grau do ensino medio")
-    TERCEIRO_MEDIO(13);
+    TERCEIRO_MEDIO(11);
 
     private int code;
 

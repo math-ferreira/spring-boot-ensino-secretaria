@@ -1,10 +1,13 @@
 package com.springboot.boaspraticas.apisecretaria.model;
 
+import java.beans.ConstructorProperties;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
@@ -29,30 +34,29 @@ public class Aluno implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @JsonIgnore
-    @Null
     private Long id;
 
-    @NotNull
     @JsonProperty("nome")
+    @NotBlank(message = "informe um nome")
     private String nome;
-    
-    @NotNull
+
     @JsonProperty("idade")
+    @NotNull(message = "informe uma idade")
     private Integer idade;
 
     @JsonProperty("periodo_letivo")
-    private int periodo;
+    @NotNull(message = "informe um periodo letivo")
+    private Integer periodo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "endereco_id")
     @JsonProperty("endereco")
-    @NotNull
+    @NotNull(message = "infome o endereco")
     private Endereco endereco;
 
     @OneToMany(mappedBy = "aluno")
-    @NotNull
+    @JsonProperty("contatos")   
     private List<Contato> contatos = new ArrayList<>();
-
 
     public Aluno() {
 

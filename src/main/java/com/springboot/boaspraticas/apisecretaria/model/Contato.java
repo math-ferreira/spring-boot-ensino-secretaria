@@ -3,6 +3,7 @@ package com.springboot.boaspraticas.apisecretaria.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,7 +25,6 @@ public class Contato implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @JsonIgnore
-    @Null
     private Long id;
 
     @JsonProperty("email")
@@ -39,7 +38,7 @@ public class Contato implements Serializable {
     @NotNull
     private String tipoTelefone;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aluno_id")
     @JsonIgnore
     private Aluno aluno;
