@@ -1,6 +1,10 @@
-package com.springboot.boaspraticas.apisecretaria.controller.exception;
+package com.springboot.boaspraticas.apisecretaria.api.exception;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -31,7 +35,7 @@ public class CustomExceptionHandler {
         return error;
     }
 
-    @ExceptionHandler(value = { MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })
+    @ExceptionHandler(value = { MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, ConstraintViolationException.class })
     @ResponseBody
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     protected ErrorResponse teste(Exception ex, WebRequest request) {
@@ -40,6 +44,11 @@ public class CustomExceptionHandler {
             List<ObjectError> objectErrors = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors();
             for (ObjectError objectError : objectErrors) {
                 message += ", " + objectError.getDefaultMessage();
+            }
+        } else if (ex.getClass().equals(ConstraintViolationException.class)){
+            Set<ConstraintViolation<?>> constraintViolations = ((ConstraintViolationException) ex).getConstraintViolations();
+            for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+                message += ", " + constraintViolation.getMessage();
             }
         } else if (ex.getClass().equals(HttpMessageNotReadableException.class)) {
             message = "Verique o Request Body, há erro de sintaxe";

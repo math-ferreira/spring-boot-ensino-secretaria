@@ -1,13 +1,11 @@
 package com.springboot.boaspraticas.apisecretaria.model;
 
-import java.beans.ConstructorProperties;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +17,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,15 +34,19 @@ public class Aluno implements Serializable {
     private Long id;
 
     @JsonProperty("nome")
-    @NotBlank(message = "informe um nome")
+    @NotBlank(message = "informe o nome")
     private String nome;
 
+    @JsonProperty("numero_matricula")
+    @NotBlank(message = "informe o numero de matricula")
+    private String numeroMatricula;
+
     @JsonProperty("idade")
-    @NotNull(message = "informe uma idade")
+    @NotNull(message = "informe a idade")
     private Integer idade;
 
     @JsonProperty("periodo_letivo")
-    @NotNull(message = "informe um periodo letivo")
+    @NotNull(message = "informe o periodo letivo")
     private Integer periodo;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -54,17 +55,19 @@ public class Aluno implements Serializable {
     @NotNull(message = "infome o endereco")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "aluno")
-    @JsonProperty("contatos")   
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    @JsonProperty("contatos")
+    @NotEmpty(message = "infome o contato")   
     private List<Contato> contatos = new ArrayList<>();
 
     public Aluno() {
 
     }
 
-    public Aluno(Long id, String nome, Integer idade, PeriodoLetivo periodo, Endereco endereco) {
+    public Aluno(Long id, String nome, String numeroMatricula, Integer idade, PeriodoLetivo periodo, Endereco endereco) {
         this.id = id;
         this.nome = nome;
+        this.numeroMatricula = numeroMatricula;
         this.idade = idade;
         setPeriodo(periodo);
         this.endereco = endereco;
@@ -85,6 +88,16 @@ public class Aluno implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+
+    public String getNumeroMatricula() {
+        return this.numeroMatricula;
+    }
+
+    public void setNumeroMatricula(String numeroMatricula) {
+        this.numeroMatricula = numeroMatricula;
+    }
+
 
     public Integer getIdade() {
         return this.idade;

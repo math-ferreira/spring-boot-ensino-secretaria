@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,21 +29,27 @@ public class Endereco implements Serializable {
     private Long id;
 
     @JsonProperty("rua")
+    @NotBlank(message = "informe a rua")
     private String rua;
 
     @JsonProperty("bairro")
+    @NotBlank(message = "informe o bairro")
     private String bairro;
 
     @JsonProperty("numero")
+    @NotNull(message = "informe o numero")
     private Integer numero;
 
     @JsonProperty("cep")
+    @NotBlank(message = "informe o cep")
     private String cep;
 
     @JsonProperty("cidade")
+    @NotBlank(message = "informe a cidade")
     private String cidade;
 
     @JsonProperty("estado")
+    @NotBlank(message = "informe o estado")
     private String estado;
 
     @OneToMany(mappedBy = "endereco")

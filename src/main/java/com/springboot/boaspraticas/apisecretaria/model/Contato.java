@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,17 +28,18 @@ public class Contato implements Serializable {
     private Long id;
 
     @JsonProperty("email")
+    @NotBlank(message = "informe o email")
     private String email;
 
     @JsonProperty("numero_telefone")
-    @NotNull
+    @NotBlank(message = "informe o numero de telefone")
     private String telefone;
 
     @JsonProperty("tipo_telefone")
-    @NotNull
+    @NotBlank(message = "informe o tipo de telefone")
     private String tipoTelefone;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "aluno_id")
     @JsonIgnore
     private Aluno aluno;

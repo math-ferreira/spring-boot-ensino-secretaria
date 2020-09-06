@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.controller.exception;
+package com.springboot.boaspraticas.apisecretaria.api.exception;
 
 import org.springframework.http.HttpStatus;
 

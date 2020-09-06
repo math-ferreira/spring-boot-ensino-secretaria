@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.controller.exception;
+package com.springboot.boaspraticas.apisecretaria.api.exception;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

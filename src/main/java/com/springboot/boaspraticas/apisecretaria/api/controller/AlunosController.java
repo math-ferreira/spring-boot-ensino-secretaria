@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.controller;
+package com.springboot.boaspraticas.apisecretaria.api.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.springboot.boaspraticas.apisecretaria.api.response.CustomResponse;
 import com.springboot.boaspraticas.apisecretaria.model.Aluno;
 import com.springboot.boaspraticas.apisecretaria.model.dto.AlunoDTO;
 import com.springboot.boaspraticas.apisecretaria.service.AlunoService;
@@ -30,17 +31,17 @@ public class AlunosController {
     private AlunoService service;
 
     @GetMapping("/alunos")
-    public ResponseEntity<List<AlunoDTO>> getAlunos(HttpServletRequest request) {
+    public ResponseEntity<?> getAlunos(HttpServletRequest request) {
         return ResponseEntity.ok(service.getAlunos());
     }
 
     @GetMapping("/alunos/{id}")
-    public ResponseEntity<AlunoDTO> getAlunosById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getAlunosById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getAlunoById(id));
     }
 
     @PostMapping("/alunos")
-    public ResponseEntity<?> postAluno(@Valid @RequestBody Aluno aluno) {
+        public ResponseEntity<?> postAluno(@Valid @RequestBody Aluno aluno) {
         service.postAluno(aluno);
         return ResponseEntity
             .created(getUri(aluno.getId()))
