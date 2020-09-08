@@ -51,7 +51,7 @@ public class CustomExceptionHandler {
                 message += ", " + constraintViolation.getMessage();
             }
         } else if (ex.getClass().equals(HttpMessageNotReadableException.class)) {
-            message = "Verique o Request Body, há erro de sintaxe";
+            message = "Verique o request body, há erro de sintaxe";
         }
 
         ErrorResponse error = new ErrorResponse();
