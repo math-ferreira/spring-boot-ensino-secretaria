@@ -25,7 +25,6 @@ public class Endereco implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @JsonIgnore
     private Long id;
 
     @JsonProperty("rua")

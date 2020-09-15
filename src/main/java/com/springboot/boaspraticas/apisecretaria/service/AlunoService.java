@@ -10,6 +10,10 @@ import com.springboot.boaspraticas.apisecretaria.model.Contato;
 import com.springboot.boaspraticas.apisecretaria.model.dto.AlunoDTO;
 import com.springboot.boaspraticas.apisecretaria.repository.AlunoReposity;
 
+import org.modelmapper.Conditions;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -48,12 +52,14 @@ public class AlunoService {
     }
 
     public AlunoDTO putAluno(Aluno aluno, Long id) {
-        if (repository.findById(id).isPresent()) {
+        Optional<Aluno> alunoGravado = repository.findById(id);
+        if (alunoGravado.isPresent()) {
             persistContato(aluno);
-            repository.save(aluno);
-            return AlunoDTO.create(aluno);
+            merge(aluno, alunoGravado.get());
+            repository.save(alunoGravado.get());
+            return AlunoDTO.create(alunoGravado.get());
         }
-        throw new SecretariaException("Não é possivel atualizar o Aluno. Id " + id + " nao encontrado",
+        throw new SecretariaException("Não é possivel atualizar o Aluno. Id " + id + " não encontrado",
                 HttpStatus.NOT_FOUND);
     }
 
@@ -64,4 +70,12 @@ public class AlunoService {
         }
         return aluno;
     }
+
+	private Aluno merge(Aluno input, Aluno output) {
+		ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+		modelMapper.getConfiguration().setDeepCopyEnabled(true);
+		modelMapper.map(input, output);
+		return output;
+	}
 }

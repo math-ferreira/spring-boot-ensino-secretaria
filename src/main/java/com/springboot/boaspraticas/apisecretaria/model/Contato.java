@@ -23,7 +23,6 @@ public class Contato implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @JsonIgnore
     private Long id;
 
     @JsonProperty("email")

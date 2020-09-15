@@ -18,7 +18,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springboot.boaspraticas.apisecretaria.model.enums.PeriodoLetivo;
 
@@ -30,7 +29,6 @@ public class Aluno implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @JsonIgnore
     private Long id;
 
     @JsonProperty("nome")
@@ -49,15 +47,15 @@ public class Aluno implements Serializable {
     @NotNull(message = "informe o periodo letivo")
     private Integer periodo;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     @JsonProperty("endereco")
-    @NotNull(message = "infome o endereco")
+    @NotNull(message = "informe o endereco")
     private Endereco endereco;
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
     @JsonProperty("contatos")
-    @NotEmpty(message = "infome o contato")   
+    @NotEmpty(message = "informe o contato")   
     private List<Contato> contatos = new ArrayList<>();
 
     public Aluno() {

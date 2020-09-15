@@ -6,8 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.springboot.boaspraticas.apisecretaria.model.Aluno;
-import com.springboot.boaspraticas.apisecretaria.model.Contato;
-import com.springboot.boaspraticas.apisecretaria.model.Endereco;
 import com.springboot.boaspraticas.apisecretaria.model.enums.PeriodoLetivo;
 
 import org.modelmapper.ModelMapper;
@@ -31,10 +29,10 @@ public class AlunoDTO {
     private PeriodoLetivo periodo;
 
     @JsonProperty("endereco")
-    private Endereco endereco;
+    private EnderecoDTO endereco;
 
     @JsonProperty("contatos")
-    private List<Contato> contatos = new ArrayList<>();
+    private List<ContatoDTO> contatos = new ArrayList<>();
 
     public static AlunoDTO create(Aluno aluno) {
         ModelMapper modelMapper = new ModelMapper();
