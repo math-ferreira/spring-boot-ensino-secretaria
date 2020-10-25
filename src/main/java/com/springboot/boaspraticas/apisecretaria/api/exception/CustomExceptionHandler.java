@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,7 +30,7 @@ public class CustomExceptionHandler {
     protected ErrorResponse objectNotFound(SecretariaException ex, WebRequest request) {
 
         ErrorResponse error = new ErrorResponse();
-        error.setHttpStatus(HttpStatus.NOT_FOUND.value());
+        error.setHttpStatus(ex.getStatusCode().value());
         error.setMessage(ex.getMessage());
         error.setPath(((ServletWebRequest) request).getRequest().getRequestURI().toString());
         return error;
@@ -51,7 +52,7 @@ public class CustomExceptionHandler {
                 message += ", " + constraintViolation.getMessage();
             }
         } else if (ex.getClass().equals(HttpMessageNotReadableException.class)) {
-            message = "Verique o request body, há erro de sintaxe";
+            message = "Verique o request body, há erro de sintaxe ou campos informados incorretamente";
         }
 
         ErrorResponse error = new ErrorResponse();

@@ -31,8 +31,8 @@ public class AlunoDTO {
     @JsonProperty("endereco")
     private EnderecoDTO endereco;
 
-    @JsonProperty("contatos")
-    private List<ContatoDTO> contatos = new ArrayList<>();
+    @JsonProperty("contato")
+    private ContatoDTO contato;
 
     public static AlunoDTO create(Aluno aluno) {
         ModelMapper modelMapper = new ModelMapper();

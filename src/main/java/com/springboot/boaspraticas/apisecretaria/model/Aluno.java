@@ -1,8 +1,6 @@
 package com.springboot.boaspraticas.apisecretaria.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -12,10 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -53,22 +50,25 @@ public class Aluno implements Serializable {
     @NotNull(message = "informe o endereco")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
-    @JsonProperty("contatos")
-    @NotEmpty(message = "informe o contato")   
-    private List<Contato> contatos = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contato_id")
+    @JsonProperty("contato")
+    @NotNull(message = "informe o contato")
+    private Contato contato;
 
     public Aluno() {
 
     }
 
-    public Aluno(Long id, String nome, String numeroMatricula, Integer idade, PeriodoLetivo periodo, Endereco endereco) {
+    public Aluno(Long id, String nome, String numeroMatricula, Integer idade, PeriodoLetivo periodo,
+            Endereco endereco, Contato contato) {
         this.id = id;
         this.nome = nome;
         this.numeroMatricula = numeroMatricula;
         this.idade = idade;
         setPeriodo(periodo);
         this.endereco = endereco;
+        this.contato = contato;
     }
 
     public Long getId() {
@@ -87,7 +87,6 @@ public class Aluno implements Serializable {
         this.nome = nome;
     }
 
-
     public String getNumeroMatricula() {
         return this.numeroMatricula;
     }
@@ -95,7 +94,6 @@ public class Aluno implements Serializable {
     public void setNumeroMatricula(String numeroMatricula) {
         this.numeroMatricula = numeroMatricula;
     }
-
 
     public Integer getIdade() {
         return this.idade;
@@ -121,8 +119,12 @@ public class Aluno implements Serializable {
         this.endereco = endereco;
     }
 
-    public List<Contato> getContatos() {
-        return this.contatos;
+    public Contato getContato() {
+        return this.contato;
+    }
+
+    public void setContato(Contato contato) {
+        this.contato = contato;
     }
 
     @Override

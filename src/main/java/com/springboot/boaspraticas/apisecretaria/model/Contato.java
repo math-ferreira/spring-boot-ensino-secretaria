@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -37,9 +39,7 @@ public class Contato implements Serializable {
     @NotBlank(message = "informe o tipo de telefone")
     private String tipoTelefone;
 
-    @ManyToOne()
-    @JoinColumn(name = "aluno_id")
-    @JsonIgnore
+    @OneToOne(mappedBy = "contato")
     private Aluno aluno;
 
     public Contato() {
