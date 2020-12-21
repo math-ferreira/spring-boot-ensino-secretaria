@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.api.controller;
+package com.springboot.apisecretaria.api.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.springboot.boaspraticas.apisecretaria.api.response.CustomResponse;
-import com.springboot.boaspraticas.apisecretaria.model.Aluno;
-import com.springboot.boaspraticas.apisecretaria.model.dto.AlunoDTO;
-import com.springboot.boaspraticas.apisecretaria.service.AlunoService;
+import com.springboot.apisecretaria.api.response.CustomResponse;
+import com.springboot.apisecretaria.model.Aluno;
+import com.springboot.apisecretaria.model.dto.AlunoDTO;
+import com.springboot.apisecretaria.service.AlunoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

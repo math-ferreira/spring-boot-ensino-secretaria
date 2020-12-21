@@ -1,9 +1,9 @@
-package com.springboot.boaspraticas.apisecretaria.model.dto;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.springboot.boaspraticas.apisecretaria.model.Contato;
+package com.springboot.apisecretaria.model.dto;
 
 import org.modelmapper.ModelMapper;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springboot.apisecretaria.model.Contato;
 
 import lombok.Data;
 

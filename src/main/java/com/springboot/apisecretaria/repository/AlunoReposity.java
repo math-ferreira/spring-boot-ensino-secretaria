@@ -1,9 +1,9 @@
-package com.springboot.boaspraticas.apisecretaria.repository;
-
-import com.springboot.boaspraticas.apisecretaria.model.Aluno;
+package com.springboot.apisecretaria.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.springboot.apisecretaria.model.Aluno;
 
 @Repository
 public interface AlunoReposity extends JpaRepository <Aluno, Long>{

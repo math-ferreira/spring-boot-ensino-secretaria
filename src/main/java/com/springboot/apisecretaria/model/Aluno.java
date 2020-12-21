@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.model;
+package com.springboot.apisecretaria.model;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.springboot.boaspraticas.apisecretaria.model.enums.PeriodoLetivo;
+import com.springboot.apisecretaria.model.enums.PeriodoLetivo;
 
 @Entity
 @Table(name = "tb_aluno")

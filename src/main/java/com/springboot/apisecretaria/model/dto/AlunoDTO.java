@@ -1,14 +1,11 @@
-package com.springboot.boaspraticas.apisecretaria.model.dto;
+package com.springboot.apisecretaria.model.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.modelmapper.ModelMapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.springboot.boaspraticas.apisecretaria.model.Aluno;
-import com.springboot.boaspraticas.apisecretaria.model.enums.PeriodoLetivo;
-
-import org.modelmapper.ModelMapper;
+import com.springboot.apisecretaria.model.Aluno;
+import com.springboot.apisecretaria.model.enums.PeriodoLetivo;
 
 import lombok.Data;
 

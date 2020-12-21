@@ -1,10 +1,10 @@
-package com.springboot.boaspraticas.apisecretaria;
+package com.springboot.apisecretaria;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiSecretariaApplicationTests {
+class SecretariaApplicationTests {
 
 	@Test
 	void contextLoads() {

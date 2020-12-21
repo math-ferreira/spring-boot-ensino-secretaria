@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.api;
+package com.springboot.apisecretaria.api;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.api.exception;
+package com.springboot.apisecretaria.api.exception;
 
 import java.util.List;
 import java.util.Set;
@@ -9,7 +9,6 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -36,11 +35,11 @@ public class CustomExceptionHandler {
         return error;
     }
 
-    @ExceptionHandler(value = { MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, ConstraintViolationException.class })
+    @ExceptionHandler(value = { MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, ConstraintViolationException.class, NumberFormatException.class })
     @ResponseBody
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     protected ErrorResponse teste(Exception ex, WebRequest request) {
-        String message = "Não foi possivel inserir o Aluno";
+        String message = "Nao foi possivel atender a solicitacao";
         if (ex.getClass().equals(MethodArgumentNotValidException.class)) {
             List<ObjectError> objectErrors = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors();
             for (ObjectError objectError : objectErrors) {
@@ -52,7 +51,7 @@ public class CustomExceptionHandler {
                 message += ", " + constraintViolation.getMessage();
             }
         } else if (ex.getClass().equals(HttpMessageNotReadableException.class)) {
-            message = "Verique o request body, há erro de sintaxe ou campos informados incorretamente";
+            message = "Verique o request body, ha erro de sintaxe ou campos informados incorretamente";
         }
 
         ErrorResponse error = new ErrorResponse();

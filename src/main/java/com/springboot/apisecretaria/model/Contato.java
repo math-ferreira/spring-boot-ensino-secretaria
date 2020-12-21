@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.model;
+package com.springboot.apisecretaria.model;
 
 import java.io.Serializable;
 import java.util.Objects;

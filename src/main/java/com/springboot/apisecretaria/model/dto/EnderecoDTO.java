@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.model.dto;
+package com.springboot.apisecretaria.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.api.response;
+package com.springboot.apisecretaria.api.response;
 
 import java.util.HashMap;
 import java.util.Map;

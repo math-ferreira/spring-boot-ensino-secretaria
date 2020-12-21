@@ -9,10 +9,10 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.springboot.boas-praticas</groupId>
-	<artifactId>secretaria</artifactId>
+	<groupId>com.springboot</groupId>
+	<artifactId>apisecretaria</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>secretaria</name>
+	<name>apisecretaria</name>
 	<description>API para gravar, buscar e atualizar alunos em uma rede de ensino</description>
 
 	<properties>

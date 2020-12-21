@@ -1,4 +1,4 @@
-package com.springboot.boaspraticas.apisecretaria.model.enums;
+package com.springboot.apisecretaria.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
