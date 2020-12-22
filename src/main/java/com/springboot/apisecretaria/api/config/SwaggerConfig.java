@@ -1,4 +1,4 @@
-package com.springboot.apisecretaria.api;
+package com.springboot.apisecretaria.api.config;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -37,7 +37,6 @@ public class AlunosController {
 
     @Autowired
     private AlunoService service;
-
     
     // Documentação da API - Swagger UI
     @ApiResponses(value = {
