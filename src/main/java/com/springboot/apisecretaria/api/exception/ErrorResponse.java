@@ -7,9 +7,9 @@ import java.time.Instant;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
 
-@Data
+@AllArgsConstructor
 @JsonPropertyOrder({ "httpStatus", "message", "path", "exception", "time_stamp" })
 public class ErrorResponse implements Serializable {
 
@@ -30,5 +30,4 @@ public class ErrorResponse implements Serializable {
         Instant instant = timestamp.toInstant();
         return Timestamp.from(instant).getTime();
     }
-
 }
