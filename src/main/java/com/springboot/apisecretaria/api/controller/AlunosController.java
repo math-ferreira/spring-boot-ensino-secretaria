@@ -3,7 +3,6 @@ package com.springboot.apisecretaria.api.controller;
 import java.net.URI;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class AlunosController {
     	})
     @ApiOperation(value = "Busca lista com dados de alunos matriculados")
     @GetMapping()
-    public ResponseEntity<?> getAlunos( HttpServletRequest request) {
+    public ResponseEntity<?> getAlunos() {
         List<AlunoDTO> alunosDTO = service.getAlunos();
         return ResponseEntity.ok(
             CustomResponse.wrapper("data", alunosDTO));
