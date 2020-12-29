@@ -10,6 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,7 +35,7 @@ public class CustomExceptionHandler {
 	}
 
 	@ExceptionHandler(value = { MethodArgumentNotValidException.class, HttpMessageNotReadableException.class,
-			ConstraintViolationException.class, NumberFormatException.class, IllegalArgumentException.class })
+			ConstraintViolationException.class, NumberFormatException.class, IllegalArgumentException.class, AuthenticationException.class })
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	protected ErrorResponse badRequest(Exception ex, WebRequest request) {
