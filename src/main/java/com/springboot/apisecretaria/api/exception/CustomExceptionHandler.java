@@ -6,10 +6,12 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import io.jsonwebtoken.SignatureException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -35,10 +37,27 @@ public class CustomExceptionHandler {
 	}
 
 	@ExceptionHandler(value = { MethodArgumentNotValidException.class, HttpMessageNotReadableException.class,
-			ConstraintViolationException.class, NumberFormatException.class, IllegalArgumentException.class, AuthenticationException.class })
+			ConstraintViolationException.class, NumberFormatException.class, IllegalArgumentException.class, AuthenticationException.class, BadCredentialsException.class, SignatureException.class})
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	protected ErrorResponse badRequest(Exception ex, WebRequest request) {
+		String path = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
+		String message = customMessage(ex);
+		ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), message, path);
+		return error;
+	}
+	
+	@ExceptionHandler(value = { HttpRequestMethodNotSupportedException.class })
+	@ResponseBody
+	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
+	protected ErrorResponse methodNotAllowed(Exception ex, WebRequest request) {
+		String path = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
+		ErrorResponse error = new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.value(), "Metodo nao suportado ou nao definido para essa rota", path);
+		return error;
+	}
+
+
+	private String customMessage(Exception ex){
 		String message = "Nao foi possivel atender a solicitacao.";
 		if (ex.getClass().equals(MethodArgumentNotValidException.class)) {
 			List<ObjectError> objectErrors = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors();
@@ -52,23 +71,15 @@ public class CustomExceptionHandler {
 				message += ", " + constraintViolation.getMessage();
 			}
 		} else if (ex.getClass().equals(HttpMessageNotReadableException.class)) {
-			message = "Verique o request body, ha erro de sintaxe ou campos informados incorretamente";
+			message += "Verifique o request body, ha erro de sintaxe ou campos informados incorretamente";
 		} else if (ex.getClass().equals(IllegalArgumentException.class)) {
 			message += " " + ex.getMessage();
+		} else if (ex.getClass().equals(BadCredentialsException.class)){
+			message += " Credenciais invalidas.";
+		} else if(ex.equals(SignatureException.class) || ex.equals(java.security.SignatureException.class)){
+			message += " " + ex.getMessage();
 		}
-
-		String path = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
-		ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), message, path);
-		return error;
-	}
-	
-	@ExceptionHandler(value = { HttpRequestMethodNotSupportedException.class })
-	@ResponseBody
-	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
-	protected ErrorResponse methodNotAllowed(Exception ex, WebRequest request) {
-		String path = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
-		ErrorResponse error = new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.value(), "Metodo nao suportado ou nao definido para essa rota", path);
-		return error;
+		return message;
 	}
 
 }
