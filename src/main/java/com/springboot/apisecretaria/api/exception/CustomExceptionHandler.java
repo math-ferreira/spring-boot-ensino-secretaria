@@ -6,7 +6,10 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import com.springboot.apisecretaria.SecretariaApplication;
 import io.jsonwebtoken.SignatureException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -27,12 +30,15 @@ import org.springframework.web.context.request.WebRequest;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomExceptionHandler {
 
+	private static Logger logger = LoggerFactory.getLogger(SecretariaApplication.class);
+
 	@ExceptionHandler(value = { SecretariaNotFoundException.class })
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	protected ErrorResponse objectNotFound(SecretariaNotFoundException ex, WebRequest request) {
 		String path = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 		ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), path);
+		logger.error(error.toString());
 		return error;
 	}
 
@@ -44,6 +50,7 @@ public class CustomExceptionHandler {
 		String path = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 		String message = customMessage(ex);
 		ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), message, path);
+		logger.error(error.toString());
 		return error;
 	}
 	
@@ -53,6 +60,7 @@ public class CustomExceptionHandler {
 	protected ErrorResponse methodNotAllowed(Exception ex, WebRequest request) {
 		String path = ((ServletWebRequest) request).getRequest().getRequestURI().toString();
 		ErrorResponse error = new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED.value(), "Metodo nao suportado ou nao definido para essa rota", path);
+		logger.error(error.toString());
 		return error;
 	}
 

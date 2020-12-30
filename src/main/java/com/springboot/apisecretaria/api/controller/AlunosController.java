@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.springboot.apisecretaria.SecretariaApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,7 +39,9 @@ public class AlunosController {
 
     @Autowired
     private AlunoService service;
-    
+
+    private static Logger logger = LoggerFactory.getLogger(SecretariaApplication.class);
+
     // Documentação da API - Swagger UI
     @ApiResponses(value = {
     	    @ApiResponse(code = 200, message = "Retorna a lista de alunos"),
@@ -48,6 +53,7 @@ public class AlunosController {
     @ApiOperation(value = "Busca lista com dados de alunos matriculados")
     @GetMapping()
     public ResponseEntity<?> getAlunos() {
+        logger.info("GET /alunos");
         List<AlunoDTO> alunosDTO = service.getAlunos();
         return ResponseEntity.ok(
             CustomResponse.wrapper("data", alunosDTO));
@@ -63,6 +69,7 @@ public class AlunosController {
     @ApiOperation(value = "Busca aluno especifico matriculados")
     @GetMapping("/{id}")
     public ResponseEntity<?> getAlunosById(@PathVariable("id") Long id) {
+        logger.info("GET /alunos/{id}");
         AlunoDTO alunoDTO = service.getAlunoById(id);
         return ResponseEntity.ok(
             CustomResponse.wrapper("data", alunoDTO));
@@ -78,6 +85,7 @@ public class AlunosController {
     @ApiOperation(value = "Salva dados de um aluno")
     @PostMapping()
     public ResponseEntity<?> postAluno(@Valid @RequestBody Aluno aluno) {
+        logger.info("POST /alunos");
         service.postAluno(aluno);
         return ResponseEntity.created(getUri(aluno.getId())).build();
     }
@@ -93,6 +101,7 @@ public class AlunosController {
     @ApiOperation(value = "Atualiza os dados de um aluno")
     @PutMapping("/{id}")
     public ResponseEntity<?> putAluno(@Valid @RequestBody Aluno aluno, @PathVariable("id") Long id) {
+        logger.info("PUT /alunos");
         service.putAluno(aluno, id);
         return ResponseEntity.noContent().build();
     }
@@ -107,6 +116,7 @@ public class AlunosController {
     @ApiOperation(value = "Remove os dados salvos de um aluno")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAluno(@PathVariable("id") Long id){
+        logger.info("DELETE /alunos");
         service.deleteAluno(id);
         return ResponseEntity.noContent().build();
     }

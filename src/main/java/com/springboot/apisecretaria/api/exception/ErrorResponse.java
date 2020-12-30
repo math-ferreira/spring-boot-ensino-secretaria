@@ -30,4 +30,13 @@ public class ErrorResponse implements Serializable {
         Instant instant = timestamp.toInstant();
         return Timestamp.from(instant).getTime();
     }
+
+    @Override
+    public String toString() {
+        return "ErrorResponse{" +
+                "httpStatus=" + httpStatus +
+                ", message='" + message + '\'' +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }

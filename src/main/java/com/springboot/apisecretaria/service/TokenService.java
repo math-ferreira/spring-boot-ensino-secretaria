@@ -2,7 +2,10 @@ package com.springboot.apisecretaria.service;
 
 import java.util.Date;
 
+import com.springboot.apisecretaria.SecretariaApplication;
 import io.jsonwebtoken.SignatureException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +30,8 @@ public class TokenService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    private static Logger logger = LoggerFactory.getLogger(SecretariaApplication.class);
 
 
     public String transformDataToToken(LoginForm loginForm) {
@@ -57,6 +62,7 @@ public class TokenService {
                     .parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
+            logger.error("Token invalido: " + getIdUsuarioToken(token));
             return false;
         }
     }
