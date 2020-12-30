@@ -56,9 +56,11 @@ public class AlunoService {
 
 	public AlunoDTO postAluno(Aluno aluno) {
 		EmailDTO checkEmail = emailService.checkEmail(aluno.getContato().getEmail());
+		
 		if (!checkEmail.getStatusEmail().equals("validated") || !checkEmail.isFormatoValido()) {
 			throw new IllegalArgumentException("Email invalido");
 		}
+		
 		repository.save(aluno);
 		jmsTemplate.convertAndSend(queueName, new JMSDTO(aluno, "POST"));
 		return AlunoDTO.create(aluno);

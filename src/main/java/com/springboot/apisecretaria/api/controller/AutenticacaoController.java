@@ -26,7 +26,7 @@ public class AutenticacaoController {
 
 	@PostMapping
 	public ResponseEntity<TokenDTO> autenticar(@RequestBody @Valid LoginForm loginForm) {
-		String token = tokenService.getToken(loginForm);
+		String token = tokenService.transformDataToToken(loginForm);
 		return ResponseEntity.ok(new TokenDTO(token, expiration));
 
 	}

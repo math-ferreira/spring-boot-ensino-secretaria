@@ -12,15 +12,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.springboot.apisecretaria.service.AutenticacaoService;
+import com.springboot.apisecretaria.repository.UsuarioRepository;
+import com.springboot.apisecretaria.service.TokenService;
+import com.springboot.apisecretaria.service.UsuarioService;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private AutenticacaoService autenticacaoService;
+	private UsuarioService autenticacaoService;
+	
+	@Autowired
+	private TokenService tokenService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	/*
 	 * Recebe uma auth, metodo que serve para config a parte de autenticação,
@@ -40,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, usuarioService), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	/*
@@ -53,14 +63,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	}
 	
-	public static void main(String[] args) {
-		BCryptPasswordEncoder cript = new BCryptPasswordEncoder();
-		System.out.println(cript.encode("senha123"));
-	}
-	
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
+	}
+	
+	public static void main(String[] args) {
+		BCryptPasswordEncoder cript = new BCryptPasswordEncoder();
+		System.out.println(cript.encode("senha123"));
 	}
 }

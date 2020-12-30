@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.springboot.apisecretaria.api.config.security.form.LoginForm;
+import com.springboot.apisecretaria.model.Usuario;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,7 +27,7 @@ public class TokenService {
 	private AuthenticationManager authenticationManager;
 	
 	
-	public String getToken(LoginForm loginForm) {
+	public String transformDataToToken(LoginForm loginForm) {
 		UsernamePasswordAuthenticationToken user = loginForm.create();
 		Authentication authentication = authenticationManager.authenticate(user);
 		String token = createToken(authentication);
@@ -36,13 +37,34 @@ public class TokenService {
 	private String createToken(Authentication authentication) {
 		Long tempoExpiracao = new Date().getTime() + Long.parseLong(expiration); 
 		Date dataExpiracao = new Date(tempoExpiracao);
+		Usuario usuario = (Usuario) authentication.getPrincipal();
 		return Jwts.builder()
 				.setIssuer("API Secretaria")
-				.setSubject(authentication.getPrincipal().toString())
+				.setSubject(usuario.getId().toString())
 				.setIssuedAt(new Date())
 				.setExpiration(dataExpiracao)
-				.signWith(SignatureAlgorithm.HS256, secret)
+				.signWith(SignatureAlgorithm.HS256, this.secret)
 				.compact();
 	}
-
+	
+	public boolean isValid(String token) {
+		
+		 try {
+			Jwts.parser()
+			 	.setSigningKey(this.secret)
+				.parseClaimsJws(token);
+			 return true;
+		} catch (Exception ex) {
+			return false;
+		}	
+	}
+	
+	public Long getIdUsuarioToken(String token) {
+		return Long.parseLong(
+				Jwts.parser()
+			 		.setSigningKey(this.secret)
+			 		.parseClaimsJws(token)
+			 		.getBody()
+			 		.getSubject());
+	}
 }
