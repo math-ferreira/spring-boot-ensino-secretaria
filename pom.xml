@@ -114,11 +114,18 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- ModelMapper - lib para mapeamento de classes e objetos -->
+		<!-- ModelMapper - Lib para mapeamento de classes e objetos -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.8</version>
+		</dependency>
+
+		<!-- H2 - Banco de dados em memoria para teste -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
