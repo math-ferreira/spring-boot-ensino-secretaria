@@ -13,8 +13,9 @@ public class SecretariaApplication {
     private static Logger logger = LoggerFactory.getLogger(SecretariaApplication.class);
 
     public static void main(String[] args) {
-        logger.info("Iniciando aplicacao");
         SpringApplication.run(SecretariaApplication.class, args);
+
+        logger.info("Iniciando aplicacao");
 
     }
 

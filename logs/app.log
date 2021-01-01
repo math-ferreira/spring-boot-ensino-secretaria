@@ -1,0 +1,1 @@
+2021-01-01 12:13:31,169 ERROR com.springboot.apisecretaria.SecretariaApplication [http-nio-8046-exec-1] Token nao informado ou invalido. Token: eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgU2VjcmV0YXJpYSIsInN1YiI6IjEiLCJpYXQiOjE2MDk0NjEyMzEsImV4cCI6MTYwOTQ2MTM1MX0.d8o1VfaSatkWqYqscy0oih9lT6LjceLA_XKNOsD4oZQ

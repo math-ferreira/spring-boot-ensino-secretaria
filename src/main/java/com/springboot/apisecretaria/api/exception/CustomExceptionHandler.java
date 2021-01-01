@@ -79,13 +79,11 @@ public class CustomExceptionHandler {
 				message += ", " + constraintViolation.getMessage();
 			}
 		} else if (ex.getClass().equals(HttpMessageNotReadableException.class)) {
-			message += "Verifique o request body, ha erro de sintaxe ou campos informados incorretamente";
+			message += " Verifique o request body, ha erro de sintaxe ou campos informados incorretamente";
 		} else if (ex.getClass().equals(IllegalArgumentException.class)) {
 			message += " " + ex.getMessage();
 		} else if (ex.getClass().equals(BadCredentialsException.class)){
 			message += " Credenciais invalidas.";
-		} else if(ex.equals(SignatureException.class) || ex.equals(java.security.SignatureException.class)){
-			message += " " + ex.getMessage();
 		}
 		return message;
 	}

@@ -1,6 +1,5 @@
 package com.springboot.apisecretaria.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,8 +19,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "tb_usuario_details")
-public class Usuario implements Serializable, UserDetails {
+@Table(name = "tb_usuario")
+public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
