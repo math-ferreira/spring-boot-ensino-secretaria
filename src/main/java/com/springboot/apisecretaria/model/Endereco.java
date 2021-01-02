@@ -124,41 +124,6 @@ public class Endereco implements Serializable {
         this.estado = estado;
     }
 
-    public Endereco id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Endereco rua(String rua) {
-        this.rua = rua;
-        return this;
-    }
-
-    public Endereco bairro(String bairro) {
-        this.bairro = bairro;
-        return this;
-    }
-
-    public Endereco numero(Integer numero) {
-        this.numero = numero;
-        return this;
-    }
-
-    public Endereco cep(String cep) {
-        this.cep = cep;
-        return this;
-    }
-
-    public Endereco cidade(String cidade) {
-        this.cidade = cidade;
-        return this;
-    }
-
-    public Endereco estado(String estado) {
-        this.estado = estado;
-        return this;
-    }
-
     public List<Aluno> getAlunos() {
         return this.alunos;
     }

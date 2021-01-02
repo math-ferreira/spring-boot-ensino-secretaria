@@ -73,21 +73,6 @@ public class Contato implements Serializable {
         this.telefone = telefone;
     }
 
-    public Contato id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Contato email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public Contato telefone(String telefone) {
-        this.telefone = telefone;
-        return this;
-    }
-
     public String getTipoTelefone() {
         return this.tipoTelefone;
     }
