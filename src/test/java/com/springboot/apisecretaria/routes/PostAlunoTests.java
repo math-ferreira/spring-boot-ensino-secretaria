@@ -2,10 +2,14 @@ package com.springboot.apisecretaria.routes;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import javax.jms.JMSException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot.apisecretaria.api.config.security.form.LoginForm;
+import com.springboot.apisecretaria.business.SalvarAlunoTests;
+import com.springboot.apisecretaria.model.Aluno;
 
 import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class PostAlunosTests {
+class PostAlunoTests extends AutenticacaoTests {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -25,31 +29,29 @@ class PostAlunosTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private AutenticacaoTests autenticacao = new AutenticacaoTests();
-
 	private static final String POST_AUTH = "/alunos";
-	private static final String EMAIL_AUTH = "fulano@uol.com";
-	private static final String SENHA_AUTH = "senha123";
-	
-	private String token;
+
+	@BeforeEach
+	public void gerarToken() throws Exception {
+		requestToken();
+	}
 
 	@Test
-	void requestToken() throws Exception {
-		autenticacao.requestToken();
-		this.token = autenticacao.getToken(); 
+	void postAluno200() throws Exception {
 		// Cria objeto Request Body para API geracao de Token
-		LoginForm login = new LoginForm(); 
-		login.setEmail(EMAIL_AUTH);
-		login.setSenha(SENHA_AUTH);
-							
-		// Requisicao a API auth
-		ResultActions requestAuth = mockMvc.perform(
-			MockMvcRequestBuilders
-				.post(POST_AUTH)
-        		.contentType("application/json")
-				.content(objectMapper
-					.writeValueAsString(login)));	
-			
+		Aluno aluno = new SalvarAlunoTests().createAluno();
+
+		// Requisicao a API POST Alunos
+		ResultActions requestAuth = 
+			mockMvc.perform(
+				MockMvcRequestBuilders
+					.post(POST_AUTH)
+						.contentType("application/json")
+						.headers(headerAuthorization())
+					.content(objectMapper
+						.writeValueAsString(aluno)));
+
+		
 		// Verifica HTTP status
 		requestAuth.andExpect(
 			MockMvcResultMatchers
@@ -65,5 +67,4 @@ class PostAlunosTests {
 															
 		assertTrue(JSONresponseBody.has("token"));
 	}
-
 }

@@ -2,16 +2,19 @@ package com.springboot.apisecretaria.routes;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.apisecretaria.api.config.security.form.LoginForm;
 import com.springboot.apisecretaria.model.Usuario;
 import com.springboot.apisecretaria.repository.UsuarioRepository;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -61,8 +64,7 @@ class AutenticacaoTests {
 		}
 	}
 
-	@Test
-	void requestToken() throws Exception {
+	public void requestToken() throws Exception {
 		// Cria usuario no BD para geracao de token
 		createUser(); 
 
@@ -94,6 +96,12 @@ class AutenticacaoTests {
 															
 		assertTrue(JSONresponseBody.has("token"));
 		this.token = JSONresponseBody.getString("token");
+	}
+
+	public HttpHeaders headerAuthorization(){
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add("Authorization", "Bearer " + getToken());
+		return httpHeaders;
 	}
 
 }

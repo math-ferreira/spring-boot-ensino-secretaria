@@ -1,7 +1,6 @@
 package com.springboot.apisecretaria.business;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.validation.ConstraintViolationException;
@@ -18,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jms.UncategorizedJmsException;
 
 @SpringBootTest
-public class SalvarAlunosTests {
+public class SalvarAlunoTests {
 
     @Autowired
     private AlunoService alunoService;
@@ -37,7 +36,7 @@ public class SalvarAlunosTests {
     private static final String ENDERECO_ESTADO_ALUNO = "SP";
     private static final String ENDERECO_CEP_ALUNO = "09231056";
 
-    private Aluno createAluno(){
+    public Aluno createAluno(){
         Aluno aluno = new Aluno();
         aluno.setNome(NOME_ALUNO);
         aluno.setIdade(IDADE_ALUNO);
