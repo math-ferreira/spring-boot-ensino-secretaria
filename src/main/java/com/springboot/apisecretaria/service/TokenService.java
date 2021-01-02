@@ -30,7 +30,7 @@ public class TokenService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private static Logger logger = LoggerFactory.getLogger(SecretariaApplication.class);
+    private static Logger logger = LoggerFactory.getLogger(TokenService.class);
 
 
     public String transformDataToToken(LoginForm loginForm) {

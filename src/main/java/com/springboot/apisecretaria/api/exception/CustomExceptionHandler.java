@@ -30,7 +30,7 @@ import org.springframework.web.context.request.WebRequest;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomExceptionHandler {
 
-	private static Logger logger = LoggerFactory.getLogger(SecretariaApplication.class);
+	private static Logger logger = LoggerFactory.getLogger(CustomExceptionHandler.class);
 
 	@ExceptionHandler(value = { SecretariaNotFoundException.class })
 	@ResponseBody

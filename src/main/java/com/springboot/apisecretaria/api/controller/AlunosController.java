@@ -40,7 +40,7 @@ public class AlunosController {
     @Autowired
     private AlunoService service;
 
-    private static Logger logger = LoggerFactory.getLogger(SecretariaApplication.class);
+    private static Logger logger = LoggerFactory.getLogger(AlunosController.class);
 
     // Documentação da API - Swagger UI
     @ApiResponses(value = {

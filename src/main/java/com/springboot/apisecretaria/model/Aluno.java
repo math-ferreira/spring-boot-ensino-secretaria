@@ -143,4 +143,9 @@ public class Aluno implements Serializable {
         return Objects.hashCode(id);
     }
 
+    @Override
+    public String toString() {
+        return "[nome="+ this.nome + ", matricula="+ this.numeroMatricula + "]";
+    }
+
 }
