@@ -56,7 +56,7 @@ class PostAlunoTests extends AutenticacaoTests {
 		requestAuth.andExpect(
 			MockMvcResultMatchers
 				.status()
-				.isOk());
+				.isCreated());
 		
 
 		// Guarda Objeto JSON retorno da API

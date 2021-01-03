@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.springboot.apisecretaria.SecretariaApplication;
+import com.springboot.apisecretaria.model.dto.ResponseAlunoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,6 @@ public class AlunosController {
 
     private static Logger logger = LoggerFactory.getLogger(AlunosController.class);
 
-    // Documentação da API - Swagger UI
     @ApiResponses(value = {
     	    @ApiResponse(code = 200, message = "Retorna a lista de alunos"),
     	    @ApiResponse(code = 204, message = "Não há alunos cadastrados"),
@@ -87,7 +87,7 @@ public class AlunosController {
     public ResponseEntity<?> postAluno(@Valid @RequestBody Aluno aluno) {
         logger.info("POST /alunos");
         service.postAluno(aluno);
-        return ResponseEntity.created(getUri(aluno.getId())).build();
+        return ResponseEntity.created(getUri(aluno.getId())).body(ResponseAlunoDTO.create(aluno));
     }
 
     @ApiResponses(value = {

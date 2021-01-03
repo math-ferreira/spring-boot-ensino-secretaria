@@ -15,7 +15,7 @@ public class SecretariaApplication {
     public static void main(String[] args) {
         SpringApplication.run(SecretariaApplication.class, args);
 
-        logger.info("Iniciando aplicacao");
+        logger.info("Aplicacao iniciada");
 
     }
 
