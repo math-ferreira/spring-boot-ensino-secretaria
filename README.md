@@ -1,5 +1,8 @@
 # Nome Projeto: spring-boot-ensino-secretaria
+
 Desenvolvimento de API a ser utilizada em secretarias de ensino, para GET, POST, PUT e DELETE de alunos com seus endereços e contatos no banco de dados. Esse projeto foi criado com o foco de trabalhar as melhores práticas e outras abordagens no desenvolvimento de uma API com Spring Boot.
+
+![image](https://user-images.githubusercontent.com/48540484/103846028-0ed5ee00-507c-11eb-88e7-a645ed3b8347.png)
 
 
 **Diagrama de classes**
