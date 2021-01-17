@@ -1,0 +1,47 @@
+version: '3'
+services:
+  db:
+    build:
+      dockerfile: ./db-mysql.dockerfile
+      context: .
+    image: mysql-no-password
+    container_name: mysql-db-secretaria
+    ports:
+      - "3308:3306"
+    expose:
+      - 3308
+    volumes:
+      - "./base_de_dados:/var/lib/mysql"
+    networks:
+      - secretaria-network
+  app-secretaria:
+    image: app-secretaria
+    build:
+      context: .
+      dockerfile: ./app.dockerfile
+    container_name: app-secretaria
+    expose:
+      - 8080
+    ports:
+      - "8082:8046"
+    restart: always
+    networks:
+      - secretaria-network
+    depends_on:
+      - db
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - "8084:80"
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - secretaria-network
+    depends_on:
+      - db
+networks:
+  secretaria-network:
+    driver: bridge
+
